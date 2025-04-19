@@ -1,0 +1,2 @@
+# Compass-Rose
+ Leitura da posição do joystick da placa BitDogLab, para que seja visualizado em um servidor: Programa ler a posição do joystick e enviar a posição X e Y para um servidor via Wi-Fi. Além disso, como um desafio extra, uma rosa dos ventos imaginaria foi criada.  Para isso, enviou-se para o aplicativo a posição (Norte, Sul Leste, Oeste, Nordeste, Sudeste, Noroeste e Sudoeste) selecionada no joystick.
