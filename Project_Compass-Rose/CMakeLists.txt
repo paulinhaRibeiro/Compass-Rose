@@ -35,7 +35,12 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(Project_Compass-Rose Project_Compass-Rose.c )
+add_executable(Project_Compass-Rose Project_Compass-Rose.c 
+                                        src_/joystick.c
+                                        src_/page.c
+                                        src_/server_http.c
+                                        src_/wifi.c
+)
 
 pico_set_program_name(Project_Compass-Rose "Project_Compass-Rose")
 pico_set_program_version(Project_Compass-Rose "0.1")
@@ -46,17 +51,30 @@ pico_enable_stdio_usb(Project_Compass-Rose 1)
 
 # Add the standard library to the build
 target_link_libraries(Project_Compass-Rose
-        pico_stdlib)
+                        pico_stdlib
+                        hardware_gpio
+                        hardware_adc
+                        pico_cyw43_arch_lwip_threadsafe_background
+)
 
 # Add the standard include files to the build
 target_include_directories(Project_Compass-Rose PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
+        ${PICO_SDK_PATH}/lib/lwip/src/include
+        ${PICO_SDK_PATH}/lib/lwip/src/include/arch
+        ${PICO_SDK_PATH}/lib/lwip/src/include/lwip
+        ${CMAKE_CURRENT_LIST_DIR}/include_headers
+        ${CMAKE_CURRENT_LIST_DIR}/src_
+)
+
+target_sources(Project_Compass-Rose PRIVATE
+    ${PICO_SDK_PATH}/lib/lwip/src/apps/http/httpd.c
+    ${PICO_SDK_PATH}/lib/lwip/src/apps/http/fs.c
 )
 
 # Add any user requested libraries
 target_link_libraries(Project_Compass-Rose 
-        pico_cyw43_arch_none
-        )
+)
 
 pico_add_extra_outputs(Project_Compass-Rose)
 
