@@ -29,7 +29,7 @@ void create_http_response(const char *direction, char position[64])
              "  <script>"
              "      setTimeout(function(){"
              "          location.reload();"
-             "      }, 1500);"
+             "      }, 3000);"
              "  </script>"
              "</body></html>",
              strcmp(direction, "Noroeste") == 0 ? "ativa" : "",

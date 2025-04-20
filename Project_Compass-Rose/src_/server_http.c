@@ -8,6 +8,37 @@
 #include "lwip/pbuf.h"
 #include "lwip/tcp.h"
 
+volatile uint16_t x = 0;
+volatile uint16_t y = 0;
+volatile uint8_t directionValueThingspeak = 0;
+
+
+typedef struct {
+    const char *name;
+    uint8_t value;
+} DirectionMap;
+
+uint8_t directionToThingspeak(const char *direction) {
+    const DirectionMap map[] = {
+        {"Centro", 0},   // Centro    correspnde ao número  "0"
+        {"Norte", 1},    // Norte     correspnde ao número  "1"
+        {"Sul", 2},      // Sul       correspnde ao número  "2"
+        {"Leste", 3},    // Leste     correspnde ao número  "3"
+        {"Oeste", 4},    // Oeste     correspnde ao número  "4"
+        {"Nordeste", 5}, // Nordeste  correspnde ao número  "5"
+        {"Noroeste", 6}, // Noroeste  correspnde ao número  "6"
+        {"Sudeste", 7},  // Sudeste   correspnde ao número  "7"
+        {"Sudoeste", 8}  // Sudoeste  correspnde ao número  "8"
+    };
+
+    for (size_t i = 0; i < sizeof(map) / sizeof(map[0]); i++) {
+        if (strcmp(direction, map[i].name) == 0) {
+            return map[i].value;
+        }
+    }
+}
+
+
 // Função de callback para processar RESPOSTA A REQUISIÇÕES HTTP
 static err_t tcp_server_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
 { // Função chamada sempre que uma requisição HTTP chegar ao servidor.
@@ -18,10 +49,14 @@ static err_t tcp_server_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, er
         return ERR_OK;
     }
 
-    uint16_t x = joystick_read_x();
-    uint16_t y = joystick_read_y();
+    x = joystick_read_x();
+    y = joystick_read_y();
     const char *direction = get_direction(x, y);
 
+    // pega o numero correspondente a direção
+    directionValueThingspeak = directionToThingspeak(direction);
+    sleep_ms(900);
+    
     char position[64];
     sprintf(position, "Posição X(%4d) e Y(%4d) do joystick", x, y);
 

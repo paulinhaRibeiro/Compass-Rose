@@ -40,6 +40,7 @@ add_executable(Project_Compass-Rose Project_Compass-Rose.c
                                         src_/page.c
                                         src_/server_http.c
                                         src_/wifi.c
+                                        src_/thingspeak.c
 )
 
 pico_set_program_name(Project_Compass-Rose "Project_Compass-Rose")
