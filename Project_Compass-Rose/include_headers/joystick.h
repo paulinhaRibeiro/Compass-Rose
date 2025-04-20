@@ -6,6 +6,6 @@
 void joystick_init(void);
 uint16_t joystick_read_x(void);
 uint16_t joystick_read_y(void);
-const char* get_direction(uint16_t x, uint16_t y);
+uint8_t get_direction(uint16_t x, uint16_t y);
 
 #endif

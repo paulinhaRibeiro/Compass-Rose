@@ -5,7 +5,7 @@
 
 extern volatile uint16_t x;
 extern volatile uint16_t y;
-extern volatile uint8_t directionValueThingspeak;
+extern volatile uint8_t direction;
 
 void server_http_init(void);
 

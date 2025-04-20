@@ -17,7 +17,7 @@ int main()
 
     sleep_ms(10000);
 
-    // tenta conectar aoa wifi
+    // tenta conectar ao wifi
     if (!connect_to_wifi())
         return 1;
 
@@ -32,11 +32,11 @@ int main()
         // Envia os dados do botão e da temperatura ao Thingspeak a cada 20seg
         if (absolute_time_diff_us(last_Thingspeak_update, get_absolute_time()) >= 20000000)
         {
-            send_data_to_thingspeak(x, y, directionValueThingspeak);
+            send_data_to_thingspeak(x, y, direction);
             last_Thingspeak_update = get_absolute_time();
         }
 
-        sleep_ms(200);
+        sleep_ms(100);
     }
 
     // ENCERRAMENTO (caso saísse do loop)
